@@ -10,16 +10,6 @@ export const useStore = create((set, get) => ({
   nodes: [],
   edges: [],
   nodeIDs: {},
-  // getNodeID: (type) => {
-
-  //     const newIDs = {...(state.nodeIDs || {})};
-  //     if (newIDs[type] === undefined) {
-  //         newIDs[type] = 0;
-  //     }
-  //     newIDs[type] += 1;
-  //     set({nodeIDs: newIDs});
-  //     return `${type}-${newIDs[type]}`;
-  // },
   getNodeID: (type) => {
     const nodeIDs = { ...get().nodeIDs };
 
@@ -32,6 +22,12 @@ export const useStore = create((set, get) => ({
   addNode: (node) => {
     set((state) => ({
       nodes: [...state.nodes, node],
+    }));
+  },
+  removeNode: (id) => {
+    set((state) => ({
+      nodes: state.nodes.filter((node) => node.id !== id),
+      edges: state.edges.filter((node) => node.source !== id && node.target !== id),
     }));
   },
   onNodesChange: (changes) => {

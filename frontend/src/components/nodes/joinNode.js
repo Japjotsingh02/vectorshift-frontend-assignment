@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BaseNode } from './BaseNode';
-import { useStore } from '../store';
+import { useStore } from '../../store/store';
 
 export const JoinNode = ({ id, data }) => {
   const [joinMethod, setJoinMethod] = useState(data?.joinMethod || 'concatenate');

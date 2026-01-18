@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BaseNode } from './BaseNode';
-import { useStore } from '../store';
+import { useStore } from '../../store/store';
 
 export const MathNode = ({ id, data }) => {
   const [operation, setOperation] = useState(data?.operation || 'add');

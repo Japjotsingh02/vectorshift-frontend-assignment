@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BaseNode } from './BaseNode';
-import { useStore } from '../store';
+import { useStore } from '../../store/store';
 
 export const ConditionalNode = ({ id, data }) => {
   const [condition, setCondition] = useState(data?.condition || 'x > 0');
@@ -16,7 +16,6 @@ export const ConditionalNode = ({ id, data }) => {
     <BaseNode
       id={id}
       title="Conditional"
-      color="#f59e0b"
       inputHandles={[
         { id: `${id}-input` }
       ]}

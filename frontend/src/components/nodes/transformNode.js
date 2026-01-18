@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BaseNode } from './BaseNode';
-import { useStore } from '../store';
+import { useStore } from '../../store/store';
 
 export const TransformNode = ({ id, data }) => {
   const [transformType, setTransformType] = useState(data?.transformType || 'uppercase');

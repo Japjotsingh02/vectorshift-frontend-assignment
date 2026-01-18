@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BaseNode } from './BaseNode';
-import { useStore } from '../store';
+import { useStore } from '../../store/store';
 
 export const FilterNode = ({ id, data }) => {
   const [filterCriteria, setFilterCriteria] = useState(data?.filterCriteria || '');
@@ -16,7 +16,6 @@ export const FilterNode = ({ id, data }) => {
     <BaseNode
       id={id}
       title="Filter"
-      color="#14b8a6"
       inputHandles={[
         { id: `${id}-input` }
       ]}

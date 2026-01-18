@@ -1,32 +1,29 @@
 import { useState } from 'react';
 import { BaseNode } from './BaseNode';
-import { useStore } from '../store';
+import { useStore } from '../../store/store';
 
-
-export const InputNode = ({ id, data }) => {
-  const [currName, setCurrName] = useState(data?.inputName || id.replace('customInput-', 'input_'));
-  const [inputType, setInputType] = useState(data.inputType || 'Text');
+export const OutputNode = ({ id, data }) => {
+  const [currName, setCurrName] = useState(data?.outputName || id.replace('customOutput-', 'output_'));
+  const [outputType, setOutputType] = useState(data.outputType || 'Text');
   const updateNodeField = useStore((state) => state.updateNodeField);
 
   const handleNameChange = (e) => {
     const value = e.target.value;
     setCurrName(value);
-    updateNodeField(id, 'inputName', value);
+    updateNodeField(id, 'outputName', value);
   };
 
   const handleTypeChange = (e) => {
     const value = e.target.value;
-    setInputType(value);
-    updateNodeField(id, 'inputType', value);
+    setOutputType(value);
+    updateNodeField(id, 'outputType', value);
   };
 
   return (
     <BaseNode
       id={id}
-      title="Input"
-      img={}
-      color="#3b82f6"
-      outputHandles={[{ id: `${id}-value` }]}
+      title="Output"
+      inputHandles={[{ id: `${id}-value` }]}
     >
       <label>
         Name:
@@ -38,9 +35,9 @@ export const InputNode = ({ id, data }) => {
       </label>
       <label>
         Type:
-        <select value={inputType} onChange={handleTypeChange}>
+        <select value={outputType} onChange={handleTypeChange}>
           <option value="Text">Text</option>
-          <option value="File">File</option>
+          <option value="File">Image</option>
         </select>
       </label>
     </BaseNode>

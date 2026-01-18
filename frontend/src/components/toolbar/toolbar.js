@@ -1,17 +1,9 @@
-import { DraggableNode } from "./draggableNode";
+import { DraggableNode } from "../draggableNode/draggableNode";
 
 export const PipelineToolbar = () => {
   return (
-    <div className="bg-white/95 py-5 px-8 rounded-xl shadow-md">
-      <div className="flex flex-col gap-1 mb-4">
-        <span className="text-xl font-semibold text-gray-800">
-          Node Palette
-        </span>
-        <span className="text-sm text-gray-500">
-          Drag nodes onto the canvas
-        </span>
-      </div>
-      <div className="flex flex-wrap gap-3">
+    <div className="bg-[#f9fafb] py-5 px-8 rounded-lg shadow-md">
+      <div className="flex flex-wrap gap-2.5">
         <DraggableNode type="customInput" label="Input" />
         <DraggableNode type="llm" label="LLM" />
         <DraggableNode type="customOutput" label="Output" />
