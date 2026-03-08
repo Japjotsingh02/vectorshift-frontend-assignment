@@ -10,6 +10,7 @@ import { MathNode } from "../nodes/mathNode";
 import { TransformNode } from "../nodes/transformNode";
 import { FilterNode } from "../nodes/filterNode";
 import { JoinNode } from "../nodes/joinNode";
+import CustomEdge from "../customEdge/CustomEdge";
 
 import "reactflow/dist/style.css";
 
@@ -27,7 +28,12 @@ const nodeTypes = {
   join: JoinNode,
 };
 
-export const PipelineUI = () => {
+const edgeTypes = {
+  custom: CustomEdge,
+};
+
+
+const PipelineUI = () => {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const {
@@ -39,8 +45,6 @@ export const PipelineUI = () => {
     onEdgesChange,
     onConnect,
   } = useStore();
-
-  console.log(nodes, edges);
 
   const getInitNodeData = (nodeID, type) => {
     let nodeData = { id: nodeID, nodeType: `${type}` };
@@ -78,6 +82,7 @@ export const PipelineUI = () => {
         addNode(newNode);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [reactFlowInstance]
   );
 
@@ -86,11 +91,9 @@ export const PipelineUI = () => {
     event.dataTransfer.dropEffect = "move";
   }, []);
 
-  console.log(nodes, edges, 'hi1');
-
   return (
     <>
-      <div ref={reactFlowWrapper} className="w-full h-[70vh] bg-white">
+      <div ref={reactFlowWrapper} className="bg-white w-full h-[inherit]">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -101,34 +104,36 @@ export const PipelineUI = () => {
           onDragOver={onDragOver}
           onInit={setReactFlowInstance}
           nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
+          defaultEdgeOptions={{
+            type: "custom",
+            style: {
+              strokeWidth: 1.5,
+              stroke: "#7A7DF3",
+              strokeDasharray: "8",
+            },
+            markerEnd: { type: "none", height: "0px", width: "0px" },
+          }}
           proOptions={proOptions}
           snapGrid={[gridSize, gridSize]}
           connectionLineType="smoothstep"
-          defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
+          defaultViewport={{ x: 0, y: 0, zoom: 1 }}
           minZoom={0.2}
           maxZoom={4}
         >
           <Background gap={gridSize} />
           <Controls className="bg-white border border-gray-200" />
           <MiniMap
-            className="bg-white border border-gray-200"
-            nodeColor={(node) => {
-              const colorMap = {
-                customInput: "#3b82f6",
-                llm: "#8b5cf6",
-                customOutput: "#ef4444",
-                text: "#10b981",
-                conditional: "#f59e0b",
-                math: "#06b6d4",
-                transform: "#ec4899",
-                filter: "#14b8a6",
-                join: "#6366f1",
-              };
-              return colorMap[node.type] || "#9ca3af";
-            }}
+            className="bg-white border border-gray-200 rounded-md"
+            nodeColor="#eef2ff"
+            nodeStrokeColor="#A9ABF7"
+            pannable
+            zoomable
           />
         </ReactFlow>
       </div>
     </>
   );
 };
+
+export default PipelineUI;

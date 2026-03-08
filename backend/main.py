@@ -5,10 +5,9 @@ from typing import List, Dict, Any, Optional
 
 app = FastAPI()
 
-# Add CORS middleware to allow frontend to connect
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # React dev server default port
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -40,13 +39,11 @@ def is_dag(nodes: List[Node], edges: List[Edge]) -> bool:
     Check if the pipeline forms a Directed Acyclic Graph (DAG) using DFS.
     Returns True if it's a DAG, False if there are cycles.
     """
-    # Build adjacency list
     graph = {node.id: [] for node in nodes}
     for edge in edges:
         if edge.source in graph:
             graph[edge.source].append(edge.target)
     
-    # Track visited nodes and nodes in current path (for cycle detection)
     visited = set()
     rec_stack = set()
     
@@ -55,19 +52,16 @@ def is_dag(nodes: List[Node], edges: List[Edge]) -> bool:
         visited.add(node_id)
         rec_stack.add(node_id)
         
-        # Check all neighbors
         for neighbor in graph.get(node_id, []):
             if neighbor not in visited:
                 if has_cycle(neighbor):
                     return True
             elif neighbor in rec_stack:
-                # Found a back edge, cycle detected
                 return True
         
         rec_stack.remove(node_id)
         return False
     
-    # Check for cycles starting from each unvisited node
     for node in nodes:
         if node.id not in visited:
             if has_cycle(node.id):

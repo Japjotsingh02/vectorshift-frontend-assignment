@@ -40,12 +40,17 @@ export const useStore = create((set, get) => ({
       edges: applyEdgeChanges(changes, state.edges),
     }));
   },
+  removeEdge: (edgeId) => {
+    set((state) => ({
+      edges: state.edges.filter((edge) => edge.id !== edgeId),
+    }));
+  },
   onConnect: (connection) => {
     set((state) => ({
       edges: addEdge(
         {
           ...connection,
-          type: "smoothstep",
+          type: "custom",
           animated: true,
           markerEnd: { type: MarkerType.Arrow, height: "20px", width: "20px" },
         },

@@ -1,21 +1,27 @@
-import { PipelineToolbar } from './components/toolbar/toolbar';
-import { PipelineUI } from './components/ui/ui';
-import { SubmitButton } from './components/submitButton/submit';
+import { PipelineToolbar } from "./components/toolbar/toolbar";
+import { SubmitButton } from "./components/submitButton/submit";
+import { PanelRightClose } from "lucide-react";
+import React, { Suspense } from "react";
+
+const PipelineUI = React.lazy(() => import("./components/pipeline-ui/ui"));
 
 function App() {
   return (
     <div className="min-h-screen">
-      {/* <header className="bg-white/95 py-5 px-8 shadow-md border-b border-black/10">
-        <h1 className="m-0 text-3xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
-          VectorShift Pipeline Builder
-        </h1>
-      </header> */}
       <div className="flex flex-col flex-1 m-2 border border-[#dadce1] bg-[#fcfcfc] rounded-lg text-[#282A34]">
+        <header className="flex justify-between py-2 px-3 border-b border-[#dadce1] items-center">
+          <div className="flex gap-5">
+            <PanelRightClose size={16} />
+            <div className="text-[#1a1b25] font-semibold text-xs">Pipelines</div>
+          </div>
+          <SubmitButton />
+        </header>
         <PipelineToolbar />
-        <div className="flex-1 bg-gray-100 rounded-xl shadow-xl overflow-hidden">
-          <PipelineUI />
+        <div className="bg-gray-100 rounded-xl shadow-xl overflow-hidden w-full h-[70vh]">
+          <Suspense>
+            <PipelineUI />
+          </Suspense>
         </div>
-        <SubmitButton />
       </div>
     </div>
   );
