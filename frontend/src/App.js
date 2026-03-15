@@ -2,6 +2,7 @@ import { PipelineToolbar } from "./components/toolbar/toolbar";
 import { SubmitButton } from "./components/submitButton/submit";
 import { PanelRightClose } from "lucide-react";
 import React, { Suspense } from "react";
+import Toast from "./components/toast/toast";
 
 const PipelineUI = React.lazy(() => import("./components/pipeline-ui/ui"));
 
@@ -23,6 +24,7 @@ function App() {
           </Suspense>
         </div>
       </div>
+      <Toast />
     </div>
   );
 }

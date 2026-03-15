@@ -5,19 +5,24 @@ import {
   applyEdgeChanges,
   MarkerType,
 } from "reactflow";
+import { initialState } from "../components/toast/toast";
 
 export const useStore = create((set, get) => ({
   nodes: [],
   edges: [],
   nodeIDs: {},
+  toast: initialState,
+  setToast: (toast) => {
+    set((state) => ({...state.toast, toast }));
+  },
   getNodeID: (type) => {
-    const nodeIDs = { ...get().nodeIDs };
-
-    nodeIDs[type] = (nodeIDs[type] || 0) + 1;
-
-    set({ nodeIDs });
-
-    return `${type}-${nodeIDs[type]}`;
+    const newIDs = { ...get().nodeIDs };
+    if (newIDs[type] === undefined) {
+      newIDs[type] = 0;
+    }
+    newIDs[type] += 1;
+    set({ nodeIDs: newIDs });
+    return `${type}-${newIDs[type]}`;
   },
   addNode: (node) => {
     set((state) => ({
@@ -27,7 +32,9 @@ export const useStore = create((set, get) => ({
   removeNode: (id) => {
     set((state) => ({
       nodes: state.nodes.filter((node) => node.id !== id),
-      edges: state.edges.filter((node) => node.source !== id && node.target !== id),
+      edges: state.edges.filter(
+        (node) => node.source !== id && node.target !== id,
+      ),
     }));
   },
   onNodesChange: (changes) => {
@@ -54,7 +61,7 @@ export const useStore = create((set, get) => ({
           animated: true,
           markerEnd: { type: MarkerType.Arrow, height: "20px", width: "20px" },
         },
-        state.edges
+        state.edges,
       ),
     }));
   },
